@@ -1078,7 +1078,7 @@ body{background-image:radial-gradient(var(--line) 2px,transparent 2.5px);backgro
   })();
 
   /* Draw tool. Fill these in once the gallery script is deployed and the page is on Vercel. */
-  var CONFIG={ROSTER_URL:'https://script.google.com/macros/s/AKfycbxZedU-Ro1MrOxBGucerjAwviVza8URtj3gJUmIgv1nMKiS9crTt-e8FuetLJAxtION/exec',SUBMIT_URL:'https://script.google.com/macros/s/AKfycbxZedU-Ro1MrOxBGucerjAwviVza8URtj3gJUmIgv1nMKiS9crTt-e8FuetLJAxtION/exec'};
+  var CONFIG={ROSTER_URL:'https://script.google.com/macros/s/AKfycbxZedU-Ro1MrOxBGucerjAwviVza8URtj3gJUmIgv1nMKiS9crTt-e8FuetLJAxtION/exec?action=roster',SUBMIT_URL:'https://script.google.com/macros/s/AKfycbxZedU-Ro1MrOxBGucerjAwviVza8URtj3gJUmIgv1nMKiS9crTt-e8FuetLJAxtION/exec'};
   var art=$('art'), ctx=art.getContext('2d'), paper=$('paper'), box=$('labelbox');
   var items=[], cur=null, tool='pen', color='#1b1b1b', size=12, pending=null;
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition, mic=$('labelmic'), listening=false, micTouch=false, rec=null;
