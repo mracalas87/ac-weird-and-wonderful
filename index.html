@@ -426,6 +426,16 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
 .pencilbtn svg{flex:none}
 .tbtn.tool{flex-direction:column;gap:2px;min-width:80px;min-height:80px;padding:6px 10px;font-size:.85rem;line-height:1.1}
 .tbtn.tool svg{display:block}
+.ltabs{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.ltabs .tbtn{min-height:48px;padding:8px 18px}
+.photo-card{padding:18px}
+.photo-card h3{margin-bottom:10px}
+.photo-card h4{margin:12px 0 6px}
+.photo-card .pv{background:var(--surface);border:2px dashed var(--line);border-radius:16px;min-height:220px;display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--muted);margin:12px 0}
+.photo-card .pv img{display:block;max-width:100%;max-height:60vh;object-fit:contain}
+.photo-card .big{min-height:64px;font-size:1.25rem;padding:12px 26px}
+.photo-card .submit-row{margin-top:10px}
+.photo-card input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.flow,.dv .drop,.dv .bub,.cyc .rab,.cyc .tr{animation:none!important}}
 @media (prefers-reduced-motion:reduce){
   .animal,.habitat,.fx,.air,.sky,.ground,.hills,.sun,.coat,.ddragon,.dsea,.dfx,.dbg,.azoom,.ahab,.afx,.abg{transition:none}
@@ -936,6 +946,30 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
         </div>
       </div>
 
+      <div id="lesson3" class="lesson1" hidden>
+        <div class="lesson-head">
+          <span class="eyebrow">Week 3</span>
+          <h2>Why do boats float?</h2>
+          <p class="intro">Test things in the water. Which ones float and which ones sink? Take a photo of your boat or your test and share it with your teacher.</p>
+        </div>
+        <section class="podcard photo-card" aria-labelledby="photoT">
+          <h3 id="photoT">Share your photo</h3>
+          <input type="file" id="photoIn" accept="image/*" capture="environment">
+          <div class="row">
+            <button class="go big" type="button" id="photoBtn">Take a photo</button>
+            <button class="tbtn" type="button" id="photoPick">Choose from the iPad</button>
+          </div>
+          <div class="pv" id="photoPv">No photo yet</div>
+          <h4>Hand in</h4>
+          <div class="submit-row">
+            <label class="sr" for="who3">Your name</label>
+            <select id="who3"></select>
+            <button class="go" type="button" id="photoSend">Submit</button>
+          </div>
+          <p class="status" id="status3" aria-live="polite"></p>
+        </section>
+      </div>
+
       <div id="soon" class="soon" hidden>
         <span class="eyebrow" id="soon-wk"></span>
         <h2 id="soon-q"></h2>
@@ -955,6 +989,10 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
       </form>
       <p class="status" id="tStatus" aria-live="polite"></p>
       <div id="gallery" hidden>
+        <div class="ltabs" id="ltabs" role="tablist" aria-label="Lesson">
+          <button class="tbtn" type="button" role="tab" data-lesson="animals" aria-pressed="true">Week 1: Weird animals</button>
+          <button class="tbtn" type="button" role="tab" data-lesson="boats" aria-pressed="false">Week 3: Floating boats</button>
+        </div>
         <div class="row" style="margin-bottom:14px;align-items:center">
           <button class="tbtn" id="tRefresh" type="button">Refresh</button>
           <button class="tbtn" id="tLock" type="button">Lock</button>
@@ -1007,8 +1045,8 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
     if(!m){window.scrollTo(0,0);return}
     var n=+m[1];
     Array.prototype.forEach.call(tabs.children,function(t){t.setAttribute('aria-selected',String(+t.dataset.i===n-1))});
-    $('lesson1').hidden=n!==1; $('lesson2').hidden=n!==2; $('lesson5').hidden=n!==5; $('soon').hidden=(n===1||n===2||n===5);
-    if(n>2&&n!==5){
+    $('lesson1').hidden=n!==1; $('lesson2').hidden=n!==2; $('lesson5').hidden=n!==5; $('lesson3').hidden=n!==3; $('soon').hidden=(n===1||n===2||n===3||n===5);
+    if(n>2&&n!==3&&n!==5){
       var l=lessons[n-1];
       $('soon-wk').textContent='Week '+n; $('soon-q').textContent=l.q; $('soon-p').textContent=l.p;
       $('soon-pill').textContent='Opens in week '+n;
@@ -1222,15 +1260,17 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
     else{clr.dataset.sure='1';clr.textContent='Tap again to clear';clrTimer=setTimeout(resetClear,3000)}
   });
 
-  var who=$('who'), status=$('status');
+  var who=$('who'), status=$('status'), who3=$('who3'), status3=$('status3');
   function fillRoster(names){
-    who.innerHTML='';
-    var o=document.createElement('option');o.value='';o.textContent='Choose your name';who.appendChild(o);
-    names.forEach(function(n){var q=document.createElement('option');q.value=n;q.textContent=n;who.appendChild(q)});
+    [who,who3].forEach(function(sel){
+      sel.innerHTML='';
+      var o=document.createElement('option');o.value='';o.textContent='Choose your name';sel.appendChild(o);
+      names.forEach(function(n){var q=document.createElement('option');q.value=n;q.textContent=n;sel.appendChild(q)});
+    });
   }
   if(CONFIG.ROSTER_URL){
     fetch(CONFIG.ROSTER_URL).then(function(r){return r.json()}).then(function(d){fillRoster(d.names||[])})
-      .catch(function(){fillRoster([]);status.textContent='The class list did not load. Ask your teacher.'});
+      .catch(function(){fillRoster([]);status.textContent=status3.textContent='The class list did not load. Ask your teacher.'});
   }else{fillRoster(['Test pupil'])}
 
   $('submit').addEventListener('click',function(){
@@ -1240,7 +1280,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
     if(!items.length){status.textContent='Draw something first.';return}
     if(!CONFIG.SUBMIT_URL){status.textContent='Saving is switched off in this preview. It works once the page is on Vercel and connected to the gallery.';return}
     status.textContent='Sending...';
-    fetch(CONFIG.SUBMIT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({name:name,image:art.toDataURL('image/png')})})
+    fetch(CONFIG.SUBMIT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({name:name,lesson:'animals',image:art.toDataURL('image/png')})})
       .then(function(){status.textContent='Sent, '+name+'! Press Submit again to replace it.'})
       .catch(function(){status.textContent='That did not send. Try again.'});
   });
@@ -1256,8 +1296,40 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
   });
   paint();
 
+  /* Week 3: share a camera photo */
+  var photoIn=$('photoIn'), photoPv=$('photoPv'), photoData='';
+  $('photoBtn').addEventListener('click',function(){photoIn.setAttribute('capture','environment');photoIn.click()});
+  $('photoPick').addEventListener('click',function(){photoIn.removeAttribute('capture');photoIn.click()});
+  photoIn.addEventListener('change',function(){
+    var f=photoIn.files&&photoIn.files[0];
+    if(!f)return;
+    status3.textContent='Getting your photo ready...';
+    var url=URL.createObjectURL(f), im=new Image();
+    im.onload=function(){
+      var max=1000, k=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight));
+      var c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      photoData=c.toDataURL('image/jpeg',0.72);
+      URL.revokeObjectURL(url);
+      photoPv.innerHTML='';var pi=document.createElement('img');pi.src=photoData;pi.alt='Your photo';photoPv.appendChild(pi);
+      status3.textContent='Looks good? Choose your name and press Submit.';
+    };
+    im.onerror=function(){URL.revokeObjectURL(url);status3.textContent='That photo could not be opened. Try another.'};
+    im.src=url;
+  });
+  $('photoSend').addEventListener('click',function(){
+    var name=who3.value;
+    if(!name){status3.textContent='Choose your name first.';return}
+    if(!photoData){status3.textContent='Take a photo first.';return}
+    if(!CONFIG.SUBMIT_URL){status3.textContent='Saving is switched off in this preview. It works once the page is on Vercel and connected to the gallery.';return}
+    status3.textContent='Sending...';
+    fetch(CONFIG.SUBMIT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({name:name,lesson:'boats',image:photoData})})
+      .then(function(){status3.textContent='Sent, '+name+'! Press Submit again to replace it.'})
+      .catch(function(){status3.textContent='That did not send. Try again.'});
+  });
+
   /* Teacher area. The PIN is checked by the gallery script, never by this page. */
-  var pinIn=$('pin'), tStatus=$('tStatus'), galBox=$('gallery'), gal=$('gal'), thePin='';
+  var pinIn=$('pin'), tStatus=$('tStatus'), galBox=$('gallery'), gal=$('gal'), thePin='', curLesson='animals';
   $('teacherLink').addEventListener('click',function(){location.hash='teacher'});
   function showWork(list,preview){
     gal.innerHTML='';
@@ -1267,7 +1339,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
       pg.className='gpage';nm.className='gname';ar.className='gart';nm.textContent=w.name;
       if(w.image){
         done++;
-        var im=document.createElement('img');im.src=w.image;im.alt='Drawing by '+w.name;
+        var im=document.createElement('img');im.src=w.image;im.alt=(curLesson==='boats'?'Photo by ':'Drawing by ')+w.name;
         im.addEventListener('click',function(){$('lbImg').src=w.image;$('lbImg').alt=im.alt;$('lightbox').hidden=false});
         ar.appendChild(im);
       }else{ar.textContent='Not yet submitted'}
@@ -1280,11 +1352,11 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
   function loadWork(){
     if(!CONFIG.SUBMIT_URL){
       tStatus.textContent='Preview mode. Any PIN works here. Once connected, your script checks the real PIN.';
-      showWork([{name:'Test pupil',image:items.length?art.toDataURL('image/png'):null},{name:'Pupil two',image:null},{name:'Pupil three',image:null}],true);
+      showWork([{name:'Test pupil',image:curLesson==='animals'?(items.length?art.toDataURL('image/png'):null):(photoData||null)},{name:'Pupil two',image:null},{name:'Pupil three',image:null}],true);
       return;
     }
     tStatus.textContent='Loading...';
-    fetch(CONFIG.SUBMIT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'work',pin:thePin})})
+    fetch(CONFIG.SUBMIT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'work',pin:thePin,lesson:curLesson})})
       .then(function(r){return r.json()})
       .then(function(d){
         if(!d.ok){lock();tStatus.textContent=d.error==='Wrong PIN'?'Wrong PIN, or too many tries. If it keeps failing, wait 10 minutes.':'Something went wrong.';return}
@@ -1297,6 +1369,14 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
     thePin=pinIn.value.trim();
     if(!thePin){tStatus.textContent='Enter the PIN.';return}
     tStatus.textContent='';pinIn.value='';loadWork();
+  });
+  Array.prototype.forEach.call($('ltabs').children,function(b){
+    b.addEventListener('click',function(){
+      curLesson=b.dataset.lesson;
+      Array.prototype.forEach.call($('ltabs').children,function(x){x.setAttribute('aria-pressed',String(x===b))});
+      gal.innerHTML='';$('tCount').textContent='';
+      loadWork();
+    });
   });
   $('tRefresh').addEventListener('click',loadWork);
   $('tLock').addEventListener('click',lock);
