@@ -282,7 +282,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes bobq{50%{transform:translateY(-8px) rotate(6deg)}}
 
 /* Playground design: blue, green and off white, chunky and friendly */
-body{background-image:radial-gradient(var(--line) 2px,transparent 2.5px);background-size:28px 28px}
+body{background-image:none}
 .bgpat{display:none}
 .tab{border-width:3px;font-size:1rem;padding:9px 18px}
 .tab[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
@@ -436,6 +436,36 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
 .photo-card .big{min-height:64px;font-size:1.25rem;padding:12px 26px}
 .photo-card .submit-row{margin-top:10px}
 .photo-card input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+/* Draw tool opens as a full-screen studio, centred and clearly at the top */
+.draw-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.draw-card.open{position:fixed;inset:0;z-index:60;margin:0!important;border-radius:0;border:0;overflow:auto;padding:10px 16px 14px;align-content:start;background:var(--bg)}
+.draw-card.open .draw-grid{grid-template-columns:max-content minmax(0,400px)!important;max-width:1100px;width:100%;margin:0 auto;justify-content:center;gap:28px}
+.draw-card.open .draw-head{max-width:1100px;width:100%;margin:0 auto}
+.draw-card.open .paper{width:min(calc((100vh - 96px)*.7071),58vw);width:min(calc((100svh - 96px)*.7071),58vw)}
+.draw-card.open .tools{align-content:start}
+.draw-card.open .sw{max-width:52px}
+.draw-card.open .swatches{grid-template-columns:repeat(5,minmax(0,52px))}
+.draw-card.open .tbtn.tool{min-width:92px;min-height:92px}
+.draw-card:not(.open) #drawClose{display:none}
+body.drawing{overflow:hidden}
+@media (max-width:520px){.draw-card.open .paper{width:100%}}
+/* Lessons page: stacked colour bands */
+.lessons-title{font-size:clamp(1.8rem,6vw,2.6rem);margin:6px 0 16px;color:var(--ink)}
+#lessons .five{gap:14px}
+#lessons .five li button{background:var(--c,#1E7FD6)!important;color:#fff;border:0!important;border-radius:26px!important;padding:22px 24px!important;min-height:96px;gap:20px!important;box-shadow:0 6px 0 rgba(0,0,0,.2);grid-template-columns:auto 1fr}
+#lessons .five li button:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+#lessons .five .wk{background:rgba(255,255,255,.22)!important;color:inherit!important;font-size:1.05rem;padding:8px 16px;border-radius:999px;white-space:nowrap}
+#lessons .five .q{font-size:clamp(1.25rem,3.4vw,1.7rem);font-weight:600;line-height:1.2}
+#lessons .five li:nth-child(1) button{--c:#1E7FD6}
+#lessons .five li:nth-child(2) button{--c:#2B8143}
+#lessons .five li:nth-child(3) button{--c:#FFC93C;color:#17324D}
+#lessons .five li:nth-child(4) button{--c:#E4572E}
+#lessons .five li:nth-child(5) button{--c:#7A52C7}
+#lessons .five li:nth-child(6) button{--c:#14867F}
+#lessons .five li:nth-child(7) button{--c:#D6478B}
+.backbtn{display:inline-flex;align-items:center;gap:8px;min-height:48px;margin:0 0 14px;padding:10px 22px;border:3px solid var(--blue);background:var(--surface);color:var(--blue);border-radius:999px;font-family:var(--display);font-weight:600;font-size:1.1rem}
+.backbtn.bottom{margin:28px 0 0}
+.hero~.about{display:none}
 @media (prefers-reduced-motion:reduce){.flow,.dv .drop,.dv .bub,.cyc .rab,.cyc .tr{animation:none!important}}
 @media (prefers-reduced-motion:reduce){
   .animal,.habitat,.fx,.air,.sky,.ground,.hills,.sun,.coat,.ddragon,.dsea,.dfx,.dbg,.azoom,.ahab,.afx,.abg{transition:none}
@@ -462,7 +492,6 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
       <button class="brand" id="brand" type="button"><img class="mini" alt="" width="32" height="32">Wonderful and Weird</button>
       <button class="pencilbtn" id="pencilBtn" type="button" aria-label="Go to the draw tool"><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><path d="M6 42l3-13L33 5a4.5 4.5 0 0 1 6.4 0l2.6 2.6a4.5 4.5 0 0 1 0 6.4L18 38 6 42z" fill="#E4572E" stroke="#17324D" stroke-width="2.5" stroke-linejoin="round"/><path d="M29 9l10 10" stroke="#17324D" stroke-width="2.5"/><path d="M9 29l10 10" stroke="#17324D" stroke-width="2.5"/><path d="M6 42l3-13 10 10z" fill="#F4D7A8" stroke="#17324D" stroke-width="2.5" stroke-linejoin="round"/><path d="M6 42l1.4-5.8 4.4 4.4z" fill="#17324D"/></svg><span>Draw</span></button>
     </div>
-    <nav class="tabs" id="tabs" role="tablist" aria-label="Lessons" hidden></nav>
   </header>
 
   <main>
@@ -479,24 +508,15 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
         </div>
       </div>
       <button class="enter" id="enter" type="button">Enter</button>
-      <section class="about" aria-labelledby="aboutT">
-        <h2 id="aboutT">About this unit</h2>
-        <p>This is our Year 1 STEAM unit, <strong>Questions About My World</strong>. Each week starts with a big question. We look, test, draw and talk. In lesson 5 we ask how machines know what to do. Lessons 6 and 7 then take our first steps into <strong>algorithms</strong> with block code and simple sequences.</p>
-      </section>
+    </section>
+
+    <section id="lessons" hidden aria-labelledby="lessonsT">
+      <h2 id="lessonsT" class="lessons-title">Our lessons</h2>
       <ol class="five" id="five"></ol>
-      <section class="learn" aria-labelledby="learnT">
-        <h2 id="learnT">What we will learn</h2>
-        <article class="lcard"><span class="wk wk0">Week 1</span><h3>Weird and wonderful animals</h3><p class="goal"><strong>We are learning to</strong> sort animals by their body parts and say why they have them.</p><ul><li>Body parts help animals stay alive.</li><li>We can sort animals in different ways.</li></ul></article>
-        <article class="lcard"><span class="wk wk1">Week 2</span><h3>Why are trees so important?</h3><p class="goal"><strong>We are learning to</strong> say why trees matter and what they give us.</p><ul><li>Trees make fresh air and give animals homes.</li><li>Roots hold the soil.</li></ul></article>
-        <article class="lcard"><span class="wk wk2">Week 3</span><h3>Will it float?</h3><p class="goal"><strong>We are learning to</strong> guess, test and sort things that float and sink.</p><ul><li>A prediction is a guess before we test.</li><li>Testing shows if we were right.</li></ul></article>
-        <article class="lcard"><span class="wk wk0">Week 4</span><h3>How do planes fly?</h3><p class="goal"><strong>We are learning to</strong> test paper planes and find the best design.</p><ul><li>A fair test keeps things the same.</li><li>We record and compare results.</li></ul></article>
-        <article class="lcard"><span class="wk wk1">Week 5</span><h3>How do machines know what to do?</h3><p class="goal"><strong>We are learning to</strong> give and follow clear steps, like making a sandwich or a cake.</p><ul><li>People give machines instructions.</li><li>Steps in the wrong order mean disaster!</li></ul></article>
-        <article class="lcard"><span class="wk wk2">Week 6</span><h3>Our first block code</h3><p class="goal"><strong>We are learning to</strong> take a first step into algorithms with block code.</p><ul><li>Blocks are instructions we snap together.</li><li>A set of steps in order is an algorithm.</li></ul></article>
-        <article class="lcard"><span class="wk wk0">Week 7</span><h3>Simple sequences</h3><p class="goal"><strong>We are learning to</strong> put simple steps in order and see how a sequence makes an algorithm.</p><ul><li>A sequence is steps in the right order.</li><li>A clear sequence makes an algorithm.</li></ul></article>
-      </section>
     </section>
 
     <section id="lesson" hidden>
+      <button class="backbtn" type="button" id="backTop"><span aria-hidden="true">&larr;</span> Back to lessons</button>
       <div id="lesson1" class="lesson1">
         <div class="lesson-head">
           <span class="eyebrow">Week 1</span>
@@ -790,9 +810,12 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
         </div>
 
         <section class="draw-card" id="drawCard" hidden style="margin-top:20px" aria-labelledby="drawTitle">
-          <div>
-            <h3 id="drawTitle">Draw your own animal</h3>
-            <p>Draw an animal. Show the body part that helps it live where it lives. Then label it.</p>
+          <div class="draw-head">
+            <div>
+              <h3 id="drawTitle">Draw your own animal</h3>
+              <p>Draw an animal. Show the body part that helps it live where it lives. Then label it.</p>
+            </div>
+            <button class="tbtn" type="button" id="drawClose">Close</button>
           </div>
           <div class="draw-grid">
             <div class="paper" id="paper">
@@ -991,6 +1014,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
         <p id="soon-p"></p>
         <span class="pill" id="soon-pill"></span>
       </div>
+      <button class="backbtn bottom" type="button" id="backBottom"><span aria-hidden="true">&larr;</span> Back to lessons</button>
     </section>
   <section id="teacher" hidden aria-labelledby="tTitle">
       <div class="lesson-head">
@@ -1037,7 +1061,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
   var NS='http://www.w3.org/2000/svg';
 
   /* Home list and tabs */
-  var five=$('five'), tabs=$('tabs');
+  var five=$('five');
   lessons.forEach(function(l,i){
     var li=document.createElement('li'), b=document.createElement('button');
     b.type='button';
@@ -1046,20 +1070,17 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
     b.addEventListener('click',function(){location.hash='lesson-'+(i+1)});
     li.appendChild(b); five.appendChild(li);
 
-    var t=document.createElement('button');
-    t.type='button'; t.className='tab'; t.setAttribute('role','tab'); t.textContent=(i+1)+' '+l.tab; t.dataset.i=i;
-    t.addEventListener('click',function(){location.hash='lesson-'+(i+1)});
-    tabs.appendChild(t);
   });
-  $('enter').addEventListener('click',function(){location.hash='lesson-1'});
+  $('enter').addEventListener('click',function(){location.hash='lessons'});
+  $('backTop').addEventListener('click',function(){location.hash='lessons'});
+  $('backBottom').addEventListener('click',function(){location.hash='lessons'});
   $('brand').addEventListener('click',function(){location.hash='home'});
 
   function route(){
-    var h=location.hash.replace('#',''), m=/^lesson-([1-7])$/.exec(h), isTeacher=h==='teacher', home=!m&&!isTeacher;
-    $('home').hidden=!home; $('lesson').hidden=!m; $('teacher').hidden=!isTeacher; tabs.hidden=!m; $('pencilBtn').hidden=!(m&&m[1]==='1');
+    var h=location.hash.replace('#',''), m=/^lesson-([1-7])$/.exec(h), isTeacher=h==='teacher', isList=h==='lessons', home=!m&&!isTeacher&&!isList;
+    $('home').hidden=!home; $('lessons').hidden=!isList; $('lesson').hidden=!m; $('teacher').hidden=!isTeacher; $('pencilBtn').hidden=!(m&&m[1]==='1');
     if(!m){window.scrollTo(0,0);return}
     var n=+m[1];
-    Array.prototype.forEach.call(tabs.children,function(t){t.setAttribute('aria-selected',String(+t.dataset.i===n-1))});
     $('lesson1').hidden=n!==1; $('lesson2').hidden=n!==2; $('lesson5').hidden=n!==5; $('lesson3').hidden=n!==3; $('soon').hidden=(n===1||n===2||n===3||n===5);
     if(n>2&&n!==3&&n!==5){
       var l=lessons[n-1];
@@ -1303,12 +1324,18 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
   var drawBtns=Array.prototype.slice.call(document.querySelectorAll('.draw-open')), card=$('drawCard');
   drawBtns.forEach(function(drawBtn){
     drawBtn.addEventListener('click',function(){
-      var open=card.hidden;
-      card.hidden=!open;
-      drawBtns.forEach(function(b){b.setAttribute('aria-pressed',String(open))});
-      if(open){card.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}
+      setDraw(card.hidden);
     });
   });
+  function setDraw(open){
+    card.hidden=!open;
+    card.classList.toggle('open',open);
+    document.body.classList.toggle('drawing',open);
+    drawBtns.forEach(function(b){b.setAttribute('aria-pressed',String(open))});
+    if(open){card.scrollTop=0;window.scrollTo(0,0);setTimeout(paint,0)}
+  }
+  $('drawClose').addEventListener('click',function(){setDraw(false)});
+  window.addEventListener('hashchange',function(){if(!card.hidden)setDraw(false)});
   paint();
 
   /* Week 3: share a camera photo */
