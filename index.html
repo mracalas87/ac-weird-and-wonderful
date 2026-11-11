@@ -447,6 +447,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
 .rfhero:active{transform:translateY(3px);box-shadow:none}
 @keyframes rfpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 @media (prefers-reduced-motion:reduce){.rfhero{animation:none}}
+.rfover .rfmenu{right:auto;left:calc(env(safe-area-inset-left,0px) + 10px)}
 .rfover{position:fixed;inset:0;z-index:9999;background:#0b3a66;display:flex;flex-direction:column}
 .rfover iframe{flex:1;width:100%;border:0;display:block}
 .rfover .rfclose{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);right:calc(env(safe-area-inset-right,0px) + 10px);z-index:2;min-height:48px;padding:8px 18px;border:2px solid #fff;border-radius:999px;background:rgba(11,58,102,.85);color:#fff;font:inherit;font-weight:700;font-size:1rem}
@@ -864,7 +865,7 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
       <div id="lesson2" class="lesson1" hidden>
         <div class="lesson-head">
           <span class="eyebrow">Week 2</span>
-          <div class="rftitle"><h2>Why are trees so important?</h2><button class="go rfopen rfhero" type="button" aria-label="Play the rainforest explorer game">&#9654; Play the game</button></div>
+          <div class="rftitle"><h2>Why are trees so important?</h2><button class="go rfopen rfhero" type="button" aria-label="Play the rainforest games">&#9654; Play the game</button></div>
           <p class="intro">Look at our Earth. What do you think the green parts are? Find out what trees do for us.</p>
         </div>
         <div class="earthcard">
@@ -900,9 +901,9 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
           <div class="earthcap" id="threeCap"></div>
         </div>
         <div class="podcard rfcard" style="margin-top:20px">
-          <h3>Explore the rainforest</h3>
-          <p class="sub">Walk, sail and look at the world map. Find the flags to meet the trees and animals in each forest.</p>
-          <div class="submit-row"><button class="go big rfopen" type="button" id="rfPlay">Play the explorer</button></div>
+          <h3>Rainforest games</h3>
+          <p class="sub">Put out fires and plant new trees, or walk, sail and explore the forests of the world.</p>
+          <div class="submit-row"><button class="go big rfopen" type="button" id="rfPlay">Play the games</button></div>
         </div>
         <div class="pair" style="margin-top:20px">
           <div class="note">
@@ -2020,8 +2021,9 @@ html{touch-action:manipulation;-webkit-text-size-adjust:100%}
     if(over)return;
     over=document.createElement("div"); over.className="rfover"; over.setAttribute("role","dialog"); over.setAttribute("aria-label","Rainforest explorer");
     var x=document.createElement("button"); x.type="button"; x.className="rfclose"; x.textContent="Back to lesson"; x.addEventListener("click",close);
-    var f=document.createElement("iframe"); f.src="rainforest-explorer.html"; f.title="Rainforest explorer game"; f.setAttribute("allow","fullscreen");
-    over.appendChild(f); over.appendChild(x); document.body.appendChild(over);
+    var f=document.createElement("iframe"); f.src="rainforest.html"; f.title="Rainforest games"; f.setAttribute("allow","fullscreen");
+    var m=document.createElement("button"); m.type="button"; m.className="rfclose rfmenu"; m.textContent="All games"; m.addEventListener("click",function(){ f.src="rainforest.html"; });
+    over.appendChild(f); over.appendChild(m); over.appendChild(x); document.body.appendChild(over);
     document.documentElement.style.overflow="hidden"; document.addEventListener("keydown",onKey); x.focus();
   }
 })();
