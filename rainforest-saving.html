@@ -136,6 +136,8 @@ box-shadow:0 0 24px rgba(150,255,160,.7),0 6px 0 #0f5a24;animation:pulse 2s ease
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .sym{width:76px;height:88px;background:#fff;border:3px solid #3bb55f;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 3px 0 #2b8143}
 .sym i{font-style:normal;font-size:38px;line-height:1.1}
+.sym i svg{width:46px;height:46px;display:block}
+#rscene svg{width:58px;height:58px}
 .sym b{font-size:13px;font-weight:600}
 .sym.drag{position:fixed;z-index:60;pointer-events:none;transform:scale(1.12) rotate(-4deg);box-shadow:0 10px 24px rgba(0,0,0,.4)}
 .bank{background:rgba(255,255,255,.35);border-radius:16px;padding:10px 6px;min-height:104px;align-items:center}
@@ -997,20 +999,51 @@ function showCard(z){
 }
 var rescue={open:false,z:null,stage:'',mode:'',k:0,plan:null,slots:[],bank:[],running:false,wrong:0,keyWord:'',keyPos:0,dot:null};
 var STATS={algo:0,fix:0,key:0,mouse:0};
+
+var FG='#3FAE5A',FD='#2E8B3A',TB='#3B3A2C';
+function eyeS(x,y,r){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#fff" stroke="#1b1b1b" stroke-width="1"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*0.45)+'" fill="#1b1b1b"/>';}
+function svgW(inner){return '<svg viewBox="0 0 48 48" aria-hidden="true">'+inner+'</svg>';}
+var FROGSVG={
+ eggs:svgW('<g fill="#d8efff" stroke="#6aa9d6" stroke-width="1.5"><circle cx="13" cy="32" r="8"/><circle cx="31" cy="32" r="8"/><circle cx="22" cy="18" r="8"/><circle cx="39" cy="17" r="6"/></g><g fill="#1b1b1b"><circle cx="13" cy="32" r="3"/><circle cx="31" cy="32" r="3"/><circle cx="22" cy="18" r="3"/><circle cx="39" cy="17" r="2.3"/></g>'),
+ tadpole:svgW('<path d="M26 27 Q37 17 45 28 Q36 32 26 29Z" fill="'+TB+'"/><ellipse cx="17" cy="27" rx="11" ry="9" fill="'+TB+'"/>'+eyeS(12,22,2.6)),
+ legs:svgW('<path d="M27 27 Q37 18 45 27 Q37 31 27 29Z" fill="'+TB+'"/><ellipse cx="17" cy="26" rx="11" ry="9" fill="'+TB+'"/><path d="M22 33 L26 43 M29 31 L37 39" stroke="'+TB+'" stroke-width="3.5" stroke-linecap="round" fill="none"/>'+eyeS(12,21,2.6)),
+ froglet:svgW('<path d="M34 30 L45 33 L34 35Z" fill="'+FD+'"/><ellipse cx="22" cy="31" rx="13" ry="9" fill="'+FG+'"/><path d="M15 38 L11 45 M29 38 L34 45 M12 33 L6 38" stroke="'+FD+'" stroke-width="3.5" stroke-linecap="round" fill="none"/><circle cx="12" cy="24" r="8" fill="'+FG+'"/>'+eyeS(9,18,3)+eyeS(17,18,3)),
+ frog:svgW('<ellipse cx="25" cy="31" rx="16" ry="11" fill="'+FG+'"/><path d="M36 38 Q46 38 45 46 M14 40 L9 46 M40 30 Q46 33 44 38" stroke="'+FD+'" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M12 38 Q16 46 22 40" stroke="'+FD+'" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="14" cy="20" r="7" fill="'+FG+'"/><circle cx="31" cy="20" r="7" fill="'+FG+'"/>'+eyeS(14,19,4.2)+eyeS(31,19,4.2)+'<path d="M13 31 Q23 37 34 31" stroke="#1b1b1b" stroke-width="1.8" fill="none" stroke-linecap="round"/>')
+};
+var BFSVG={
+ egg:svgW('<path d="M4 38 Q24 28 44 38 L44 44 L4 44Z" fill="#4caf50"/><ellipse cx="24" cy="26" rx="8" ry="10" fill="#fff6cf" stroke="#d9c37a" stroke-width="1.6"/>'),
+ cat:svgW('<g fill="#7ed957" stroke="#3f9a2e" stroke-width="1.5"><circle cx="9" cy="30" r="6"/><circle cx="19" cy="31" r="6"/><circle cx="29" cy="31" r="6"/><circle cx="39" cy="30" r="6.5"/></g><circle cx="41" cy="28" r="1.6" fill="#1b1b1b"/><path d="M40 22 L43 15 M44 24 L48 19" stroke="#3f9a2e" stroke-width="1.6" stroke-linecap="round"/>'),
+ pupa:svgW('<path d="M24 4 L24 12" stroke="#6b4f2a" stroke-width="2.4" stroke-linecap="round"/><path d="M24 11 Q35 20 31 33 Q27 44 24 44 Q21 44 17 33 Q13 20 24 11Z" fill="#a98a52" stroke="#6b4f2a" stroke-width="1.8"/><path d="M19 22 Q24 25 29 22 M18 29 Q24 32 30 29" stroke="#6b4f2a" stroke-width="1.4" fill="none"/>'),
+ bfly:svgW('<path d="M24 24 Q8 4 5 18 Q4 30 24 28Z" fill="#ff9a3c" stroke="#c96a12" stroke-width="1.5"/><path d="M24 24 Q40 4 43 18 Q44 30 24 28Z" fill="#ff9a3c" stroke="#c96a12" stroke-width="1.5"/><path d="M24 28 Q10 30 12 42 Q20 44 24 31Z" fill="#ffc46b" stroke="#c96a12" stroke-width="1.5"/><path d="M24 28 Q38 30 36 42 Q28 44 24 31Z" fill="#ffc46b" stroke="#c96a12" stroke-width="1.5"/><ellipse cx="24" cy="26" rx="2.4" ry="10" fill="#3b2a1a"/><path d="M23 16 L19 8 M25 16 L29 8" stroke="#3b2a1a" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="16" r="2.2" fill="#fff"/><circle cx="34" cy="16" r="2.2" fill="#fff"/>')
+};
 var SY={
- clear:['🧹','Clear'],seed:['🌰','Seeds'],water:['💧','Water'],wait:['⏳','Wait'],guard:['🛡️','Protect'],
- shout:['📢','Shout'],spray:['🚿','Spray'],cool:['❄️','Cool'],plant:['🌱','Plant']
+ clear:['🧹','Clear'],seed:['🌰','Seed'],pot:['🏺','Pot'],soil:['🟫','Soil'],seedling:['🌱','Seedling'],tree:['🌳','Tree'],eggs:[FROGSVG.eggs,'Eggs'],tadpole:[FROGSVG.tadpole,'Tadpole'],legs:[FROGSVG.legs,'Legs'],froglet:[FROGSVG.froglet,'Froglet'],frog:[FROGSVG.frog,'Frog'],water:['💧','Water'],wait:['⏳','Wait'],guard:['🛡️','Protect'],
+ begg:[BFSVG.egg,'Egg'],bcat:[BFSVG.cat,'Caterpillar'],bpupa:[BFSVG.pupa,'Chrysalis'],bfly:[BFSVG.bfly,'Butterfly']
 };
 /* Different order for each problem: that is the algorithm */
 var PLANS={
- cut:{why:'🪓 Trees were cut down! Make a plan to grow them back.',order:['clear','seed','water','wait','guard'],
-  states:['🟫🟫🟫','🌰🌰🌰','🌱🌱🌱','🌱🌱🌱⏳','🌳🌳🌳🛡️'],start:'🪵🪵🪵',clues:['First: sweep away the old stumps.','Next: put the seeds in the ground.','Then: give the seeds some water.','Then: wait for the plants to grow.','Last: keep the new trees safe.']},
- fire:{why:'🔥 Fire! Make a plan to save the forest.',order:['shout','spray','cool','plant'],
-  states:['📢🔥🔥🔥','💧🔥💨','🪵🪵🪵','🌱🌱🌱'],start:'🔥🔥🔥',clues:['First: shout for help!','Next: spray the flames with water.','Then: let the ground cool down.','Last: plant new seeds.']}
+ cut:{why:'🪓 The trees are gone! Grow a new tree, just like at home.',order:['pot','soil','seed','water','seedling','tree'],
+  states:['🏺','🟫🏺','🌰🟫🏺','💧🌰🟫🏺','🌱','🌳🌳🌳'],start:'🪵🪵🪵',clues:['First: get a pot.','Next: put soil in the pot.','Then: put a seed in the soil.','Then: give the seed some water.','Then: see the seedling grow.','Last: see the big tree!']},
+ frog:{why:'🐸 The frogs lost their pond! Help a frog grow up.',order:['eggs','tadpole','legs','froglet','frog'],
+  states:[FROGSVG.eggs,FROGSVG.tadpole,FROGSVG.legs,FROGSVG.froglet,FROGSVG.frog+FROGSVG.frog+FROGSVG.frog],start:'🌿💧🌿',clues:['First: frogs start as eggs in the water.','Next: the eggs hatch into tadpoles with a tail.','Then: the tadpole grows legs.','Then: the tail gets shorter. It is a froglet!','Last: it is a grown-up frog!']},
+ fire:{why:'🔥 Fire! The butterflies lost their leaves. Help a butterfly grow up.',order:['begg','bcat','bpupa','bfly'],
+  states:[BFSVG.egg,BFSVG.cat,BFSVG.pupa,BFSVG.bfly+BFSVG.bfly+BFSVG.bfly],start:'🔥🍃🔥',clues:['First: a butterfly starts as a tiny egg on a leaf.','Next: the egg hatches into a hungry caterpillar.','Then: the caterpillar makes a chrysalis and rests inside.','Last: out comes a beautiful butterfly!']}
 };
 var WORDS=[['TREE','🌳'],['SAVE','💚'],['AIR','💨'],['SUN','☀️'],['SEED','🌰'],['LEAF','🍃'],['RAIN','🌧️'],['WATER','💧'],['FOREST','🌲'],['OXYGEN','💨'],['OWL','🦉'],['BEE','🐝'],['ANT','🐜'],['BUG','🐛'],['FROG','🐸'],['BIRD','🐦'],['PLANT','🌱']];
 var WORD_LV=[[0,1,2,3,10,11,12,13],[4,5,6,7,14,15,16],[8,9,7,4,16]];
-var DOTN=[7,11,10];
+function ring(n,cx,cy,ro,ri,a0){var a=[];for(var i=0;i<n;i++){var r=i%2?ri:ro,an=a0+i*2*Math.PI/n;a.push([cx+r*Math.cos(an),cy+r*Math.sin(an)]);}return a;}
+var DOTS=[
+ [{n:'tree',p:[[50,6],[86,64],[60,64],[60,92],[40,92],[40,64],[14,64]]},
+  {n:'raindrop',p:[[50,6],[74,50],[70,80],[50,94],[30,80],[26,50]]},
+  {n:'mountain',p:[[8,86],[34,36],[50,58],[68,20],[94,86]]}],
+ [{n:'tree',p:[[50,6],[74,34],[60,34],[86,62],[60,62],[60,92],[40,92],[40,62],[14,62],[40,34],[26,34]]},
+  {n:'mushroom',p:[[14,50],[22,28],[40,14],[60,14],[78,28],[86,50],[62,50],[62,88],[38,88],[38,50]]},
+  {n:'fish',p:[[10,50],[34,28],[62,28],[80,44],[94,30],[94,70],[80,56],[62,72],[34,72]]}],
+ [{n:'star',p:ring(12,50,50,42,22,-Math.PI/2)},
+  {n:'heart',p:[[50,28],[40,16],[26,14],[14,24],[12,40],[20,58],[34,74],[50,90],[66,74],[80,58],[88,40],[86,24],[74,14],[60,16]]},
+  {n:'sun',p:ring(16,50,50,42,26,-Math.PI/2)}]
+];
+var lastDot=-1;
 var elRB=document.getElementById('rbody'),elRM=document.getElementById('rmsg');
 function rset(html){elRB.innerHTML=html;}
 function rmsg(t){elRM.textContent=t||'';}
@@ -1020,10 +1053,12 @@ function rbtns(list){
   list.forEach(function(it){var b=document.createElement('button');b.className='rbtn'+(it.alt?' alt':'')+(it.big?' big':'');b.textContent=it.t;b.addEventListener('click',it.f);w.insertBefore(b,sk);});
 }
 function rstage(t){document.getElementById('rstep').textContent=t;}
+var lastPlanKey='';
+function pickPlan(mode){if(mode==='fire')return 'fire';var k=lastPlanKey==='cut'?'frog':(lastPlanKey==='frog'?'cut':(Math.random()<0.5?'cut':'frog'));lastPlanKey=k;return k;}
 function openRescue(z){
   if(!game.active||rescue.open||(!z.threat&&!z.lost))return;
   rescue.open=true;rescue.z=z;hideHint();rescue.k++;
-  rescue.mode=z.threat==='fire'?'fire':'cut';
+  rescue.mode=z.threat==='fire'?'fire':'cut';rescue.planKey=pickPlan(rescue.mode);
   document.getElementById('rflag').textContent=z.flag;document.getElementById('rname').textContent=z.name;
   document.getElementById('rescue').classList.add('show');
   document.getElementById('rskip').style.display='';
@@ -1032,9 +1067,9 @@ function openRescue(z){
 /* ---------- challenge 1: algorithm ---------- */
 function startAlgo(){
   lastClue='';
-  var P=PLANS[rescue.mode];rescue.plan=P;rescue.stage='algo';rescue.running=false;
+  var P=PLANS[rescue.planKey||rescue.mode];rescue.plan=P;rescue.stage='algo';rescue.running=false;
   rstage('1 of 2');
-  document.getElementById('rwhy').textContent=P.why+(rescue.z.lost?' (The whole forest is gone.)':'');
+  document.getElementById('rwhy').textContent=P.why+(rescue.z.lost&&P===PLANS.cut?' (The whole forest is gone.)':'');
   rescue.slots=P.order.map(function(){return null;});
   rescue.bank=shuffle(P.order.slice());
   if(rescue.bank.join()===P.order.join())rescue.bank.reverse();
@@ -1132,7 +1167,7 @@ function runAlgo(){
       rmsg('Oops! Step '+(i+1)+' did not work. Fix it and try again.');
       rbtns([{t:'▶ RUN',f:runAlgo,big:1},{t:'💡 Hint',alt:true,f:hintAlgo},{t:'↺ Reset',alt:true,f:startAlgo}]);return;
     }
-    sc.textContent=P.states[i];
+    sc.innerHTML=P.states[i];
     setTimeout(function(){slots[i].classList.remove('run');slots[i].classList.add('ok');i++;step();},750);
   }
   step();
@@ -1173,15 +1208,10 @@ window.addEventListener('keydown',function(e){
   if(rescue.stage==='key'&&e.key.length===1&&/[a-z]/i.test(e.key)){e.preventDefault();keyIn(e.key.toUpperCase());}
 },true);
 window.addEventListener('keyup',function(e){if(rescue.open)e.stopPropagation();},true);
-function dotPoints(n){
-  if(n<=7)return [[50,6],[86,64],[60,64],[60,92],[40,92],[40,64],[14,64]];
-  if(n<=11&&level===1)return [[50,6],[68,34],[60,34],[80,62],[58,62],[58,92],[42,92],[42,62],[20,62],[40,34],[32,34]];
-  var a=[];for(var i=0;i<10;i++){var r=i%2?20:46,an=-Math.PI/2+i*Math.PI/5;a.push([50+r*Math.cos(an),54+r*Math.sin(an)]);}return a;
-}
 function startDots(){
   rescue.stage='dots';rescue.running=false;
-  var pts=dotPoints(DOTN[level]),n=pts.length;rescue.dot={pts:pts,next:1,n:n};
-  document.getElementById('rwhy').textContent='🖱️ Join the numbers in order. Slide with your mouse, trackpad or finger!';
+  var list=DOTS[level],k=Math.floor(Math.random()*list.length);if(k===lastDot)k=(k+1+Math.floor(Math.random()*(list.length-1)))%list.length;lastDot=k;var pat=list[k],pts=pat.p,n=pts.length;rescue.dot={pts:pts,next:1,n:n,name:pat.n};
+  document.getElementById('rwhy').textContent='🖱️ Join the numbers 1 to '+n+' in order to make a '+pat.n+'. Slide with your mouse, trackpad or finger!';
   var t='<div id="dots"><svg viewBox="0 0 100 100"><polygon id="dfill" points="" fill="rgba(60,199,106,.0)"/><polyline id="dline" points="" fill="none" stroke="#1f9d4a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line id="drub" x1="0" y1="0" x2="0" y2="0" stroke="#1f9d4a" stroke-width="1.4" stroke-dasharray="3 3" opacity="0"/></svg>';
   pts.forEach(function(p,i){t+='<div class="dn'+(i===0?' next':'')+'" data-n="'+(i+1)+'" style="left:'+p[0]+'%;top:'+p[1]+'%">'+(i+1)+'</div>';});
   t+='</div>';rset(t);rmsg('Start at 1.');rbtns([]);
@@ -2244,7 +2274,7 @@ document.getElementById('eback').addEventListener('click',function(){showHome('h
 homeResize();initGlobe();
 window.addEventListener('resize',homeResize);
 requestAnimationFrame(homeFrame);
-window.__rf={stats:STATS,key:function(c){keyIn(c);},runAlgo:runAlgo,startSkill:startSkill,finish:finishRescue,zones:function(){return zones;},player:player,game:game,spawn:spawnThreat,open:openRescue,restart:restartNow,rescue:rescue};
+window.__rf={openFire:function(){game.active=true;rescue.open=true;rescue.z={flag:'🇧🇷',name:'Amazon',threat:'fire',lost:false};rescue.mode='fire';rescue.planKey=pickPlan('fire');document.getElementById('rescue').classList.add('show');startAlgo();return rescue.planKey+':'+rescue.plan.order.join();},solve:function(){rescue.slots=rescue.plan.order.slice();drawAlgo();runAlgo();},dots:function(){return DOTS;},setLevel:function(n){level=n;},startDots:function(){rescue.open=true;rescue.z=zones[0];startDots();},stats:STATS,key:function(c){keyIn(c);},runAlgo:runAlgo,startSkill:startSkill,finish:finishRescue,zones:function(){return zones;},player:player,game:game,spawn:spawnThreat,open:openRescue,restart:restartNow,rescue:rescue};
 
 step('Shaping the continents...',function(){makeTile();buildTerrain();})
 .then(function(){return step('Planting forests and mountains...',function(){
