@@ -161,6 +161,10 @@ box-shadow:0 0 24px rgba(150,255,160,.7),0 6px 0 #0f5a24;animation:pulse 2s ease
 #zgo{font-size:26px;font-weight:700;min-height:64px;padding:14px 30px;box-shadow:0 5px 0 #b87a00}
 #eback{font-size:clamp(32px,5vw,46px);padding:18px 64px}
 #rskip{font-size:18px;padding:12px}
+/* no skip button; easy keyboard is a few big keys */
+#rskip{display:none!important}
+.kr.few{gap:12px;flex-wrap:wrap;justify-content:center}
+.kr.few .key{width:clamp(48px,13vw,92px);height:clamp(60px,15vw,92px);font-size:clamp(30px,7vw,52px)}
 /* primary buttons: bright colour, pulse and wiggle */
 @keyframes goBob{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.08) rotate(-1.5deg)}50%{transform:scale(1.12) rotate(0)}75%{transform:scale(1.08) rotate(1.5deg)}}
 @keyframes goGlow{0%,100%{box-shadow:0 6px 0 #b85200,0 0 0 0 rgba(255,176,46,.8)}50%{box-shadow:0 6px 0 #b85200,0 0 0 18px rgba(255,176,46,0)}}
@@ -1221,13 +1225,21 @@ function startSkill(){
   if(rescue.k%2===1)startKey();else startDots();
 }
 var KROWS=['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+/* Easy: only the letters in the word plus three extras, in one row. Other levels: full keyboard. */
+function keyRows(word){
+  if(level!==0)return KROWS;
+  var have={},out=[],i;for(i=0;i<word.length;i++){if(!have[word[i]]){have[word[i]]=1;out.push(word[i]);}}
+  var pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(function(c){return !have[c];});
+  for(i=0;i<3;i++){var k=Math.floor(Math.random()*pool.length);out.push(pool.splice(k,1)[0]);}
+  return [out.sort().join('')];
+}
 function startKey(){
   rescue.stage='key';rescue.running=false;rescue.wrong=0;
   var list=WORD_LV[level],w=WORDS[list[Math.floor(Math.random()*list.length)]];
   rescue.keyWord=w[0];rescue.keyPos=0;
   document.getElementById('rwhy').textContent='⌨️ Find the letters on the keyboard '+w[1];
   var t='<div class="word">';for(var i=0;i<w[0].length;i++)t+='<div class="wt'+(i===0?' cur':'')+'">'+w[0][i]+'</div>';t+='</div><div class="kb">';
-  KROWS.forEach(function(r){t+='<div class="kr">';for(var i=0;i<r.length;i++)t+='<button class="key" data-k="'+r[i]+'">'+r[i]+'</button>';t+='</div>';});
+  keyRows(w[0]).forEach(function(r){t+='<div class="kr'+(level===0?' few':'')+'">';for(var i=0;i<r.length;i++)t+='<button class="key" data-k="'+r[i]+'">'+r[i]+'</button>';t+='</div>';});
   t+='</div>';rset(t);rmsg('Find the yellow letter.');rbtns([]);
   elRB.querySelectorAll('.key').forEach(function(k){k.addEventListener('click',function(){keyIn(k.dataset.k);});});
 }
