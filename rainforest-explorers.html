@@ -163,6 +163,17 @@ box-shadow:0 0 24px rgba(150,255,160,.7),0 6px 0 #0f5a24;animation:pulse 2s ease
 #zgo{font-size:26px;font-weight:700;min-height:64px;padding:14px 30px;box-shadow:0 5px 0 #b87a00}
 #eback{font-size:clamp(32px,5vw,46px);padding:18px 64px}
 #rskip{font-size:18px;padding:12px}
+/* primary buttons: bright colour, pulse and wiggle */
+@keyframes goBob{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.08) rotate(-1.5deg)}50%{transform:scale(1.12) rotate(0)}75%{transform:scale(1.08) rotate(1.5deg)}}
+@keyframes goGlow{0%,100%{box-shadow:0 6px 0 #b85200,0 0 0 0 rgba(255,176,46,.8)}50%{box-shadow:0 6px 0 #b85200,0 0 0 18px rgba(255,176,46,0)}}
+.rbtn:not(.alt),#zgo,#eback,#lostart{background:linear-gradient(#ffc13d,#f57c00)!important;color:#fff!important;border:5px solid #fff!important;text-shadow:0 2px 0 rgba(0,0,0,.28);box-shadow:0 6px 0 #b85200,0 8px 16px rgba(0,0,0,.3);animation:goBob 1.3s ease-in-out infinite,goGlow 1.3s ease-out infinite}
+#zgo{color:#4a2c00!important;text-shadow:none}
+.rbtn:not(.alt):active,#zgo:active,#eback:active{animation:none;transform:translateY(5px);box-shadow:0 1px 0 #b85200}
+/* bigger keyboard */
+.kr{gap:7px}
+.key{width:clamp(28px,7.6vw,60px);height:clamp(40px,10vw,64px);font-size:clamp(20px,4vw,30px);border-radius:12px;border:3px solid #5f9a74;box-shadow:0 4px 0 #5f9a74}
+.key:active{box-shadow:none;background:#d7ffd0}
+
 .word{display:flex;gap:8px;justify-content:center;margin:8px 0}
 .wt{width:64px;height:76px;border-radius:14px;border:3px solid #5da04c;background:#fff;font-size:44px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#143a1f}
 .wt.cur{border-color:#e0a800;background:#fff6b0;animation:blink 1s steps(2) infinite}
