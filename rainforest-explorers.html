@@ -437,7 +437,21 @@ var SITES=[
 ['Canada','🇨🇦',-100,56,2.6,'boreal','Bears and moose live in the forests of Canada.'],
 ['Sweden','🇸🇪',16,62,1,'boreal','Forests cover most of Sweden.'],
 ['United States','🇺🇸',-123,43.5,1,'temperate','The tallest trees in the world, the redwoods, grow here.'],
-['Chile','🇨🇱',-72.8,-41.5,0.8,'temperate','Chile has old rainforests with giant trees.']
+['Chile','🇨🇱',-72.8,-41.5,0.8,'temperate','Chile has old rainforests with giant trees.'],
+['Portugal','🇵🇹',-8,39.5,0.3,'temperate','Cork oak trees grow here. People peel their bark to make corks, and the tree grows it back!',70],
+['Spain','🇪🇸',-3.5,40.5,0.4,'temperate','Spain has big forests of oak and pine. Wild brown bears live in the northern mountains.',110],
+['France','🇫🇷',2.3,46.6,0.5,'temperate','France has lots of oak and beech woods. The Landes is one of the biggest pine forests in Europe.',115],
+['England','🏴󠁧󠁢󠁥󠁮󠁧󠁿',-0.6,52.6,0.3,'temperate','English woods are full of bluebells in spring. Some oak trees here are over 1000 years old.',85],
+['Wales','🏴󠁧󠁢󠁷󠁬󠁳󠁿',-4.3,52.2,0.2,'temperate','Wales has old oak woods covered in moss and ferns. They are called temperate rainforests!',60],
+['Scotland','🏴󠁧󠁢󠁳󠁣󠁴󠁿',-4.2,57,0.3,'boreal','Scotland has the old Caledonian pine forest, with tall Scots pines and wild red deer.',90],
+['Ireland','🇮🇪',-8.2,53.2,0.3,'temperate','Ireland is called the Emerald Isle because it is so green.',70],
+['Germany','🇩🇪',10.3,51,0.4,'temperate','The Black Forest in Germany is full of dark fir trees. It is where cuckoo clocks come from!',100],
+['Italy','🇮🇹',12.5,42.4,0.3,'temperate','Italy has forests of chestnut and pine, and wild wolves live in the mountains.',90],
+['Norway','🇳🇴',9,61.2,0.5,'boreal','Norway has big forests of spruce and pine, with deep fjords and snowy mountains.',110],
+['Finland','🇫🇮',26,63.5,0.6,'boreal','Finland has more forest than almost anywhere, and thousands of lakes too.',115],
+['Japan','🇯🇵',138,36.5,0.5,'temperate','Japan has forests of tall cedar trees, pink cherry blossom and maples that turn red in autumn.',105],
+['New Zealand','🇳🇿',172,-41.5,0.4,'temperate','New Zealand has giant kauri trees and lots of birds that cannot fly.',100],
+['India','🇮🇳',76.5,11,0.6,'rain','India has rainforests in the Western Ghats and forests where tigers live.',120]
 ];
 var KIND_TXT={rain:'Rainforest',boreal:'Pine forest',temperate:'Forest'};
 
@@ -878,7 +892,21 @@ var FLAGSVG={
  '🇵🇬':'<rect width="30" height="20" fill="#CE1126"/><path d="M0 0L30 20L0 20Z" fill="#000"/><g fill="#fff"><circle cx="5" cy="15" r="0.9"/><circle cx="9" cy="17" r="0.9"/><circle cx="7" cy="12" r="0.9"/><circle cx="3.5" cy="17.5" r="0.9"/><circle cx="11" cy="14" r="0.9"/></g><path d="M18 4Q24 3 25 7Q22 6 21 9Q19 7 18 4Z" fill="#FCD116"/>',
  '🇷🇺':'<rect width="30" height="20" fill="#fff"/><rect y="6.7" width="30" height="6.7" fill="#0039A6"/><rect y="13.4" width="30" height="6.6" fill="#D52B1E"/>',
  '🇸🇪':'<rect width="30" height="20" fill="#006AA7"/><rect x="8" width="4.4" height="20" fill="#FECC02"/><rect y="7.8" width="30" height="4.4" fill="#FECC02"/>',
- '🇺🇸':'<rect width="30" height="20" fill="#fff"/><g fill="#B22234"><rect width="30" height="1.54"/><rect y="3.08" width="30" height="1.54"/><rect y="6.15" width="30" height="1.54"/><rect y="9.23" width="30" height="1.54"/><rect y="12.3" width="30" height="1.54"/><rect y="15.4" width="30" height="1.54"/><rect y="18.46" width="30" height="1.54"/></g><rect width="13" height="10.8" fill="#3C3B6E"/><g fill="#fff"><circle cx="2.5" cy="2.2" r=".7"/><circle cx="6.5" cy="2.2" r=".7"/><circle cx="10.5" cy="2.2" r=".7"/><circle cx="4.5" cy="5.2" r=".7"/><circle cx="8.5" cy="5.2" r=".7"/><circle cx="2.5" cy="8.2" r=".7"/><circle cx="6.5" cy="8.2" r=".7"/><circle cx="10.5" cy="8.2" r=".7"/></g>'
+ '🇺🇸':'<rect width="30" height="20" fill="#fff"/><g fill="#B22234"><rect width="30" height="1.54"/><rect y="3.08" width="30" height="1.54"/><rect y="6.15" width="30" height="1.54"/><rect y="9.23" width="30" height="1.54"/><rect y="12.3" width="30" height="1.54"/><rect y="15.4" width="30" height="1.54"/><rect y="18.46" width="30" height="1.54"/></g><rect width="13" height="10.8" fill="#3C3B6E"/><g fill="#fff"><circle cx="2.5" cy="2.2" r=".7"/><circle cx="6.5" cy="2.2" r=".7"/><circle cx="10.5" cy="2.2" r=".7"/><circle cx="4.5" cy="5.2" r=".7"/><circle cx="8.5" cy="5.2" r=".7"/><circle cx="2.5" cy="8.2" r=".7"/><circle cx="6.5" cy="8.2" r=".7"/><circle cx="10.5" cy="8.2" r=".7"/></g>',
+ '🇵🇹':'<rect width="30" height="20" fill="#FF0000"/><rect width="12" height="20" fill="#006600"/><circle cx="12" cy="10" r="3.8" fill="#FFCC00"/><rect x="10.4" y="7.8" width="3.2" height="3.8" rx=".6" fill="#FF0000" stroke="#fff" stroke-width=".5"/>',
+ '🇪🇸':'<rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/><rect x="5" y="8" width="3" height="4" rx=".6" fill="#AA151B"/>',
+ '🇫🇷':'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#0055A4"/><rect x="20" width="10" height="20" fill="#EF4135"/>',
+ '🏴󠁧󠁢󠁥󠁮󠁧󠁿':'<rect width="30" height="20" fill="#fff"/><rect x="12.5" width="5" height="20" fill="#CE1124"/><rect y="7.5" width="30" height="5" fill="#CE1124"/>',
+ '🏴󠁧󠁢󠁷󠁬󠁳󠁿':'<rect width="30" height="20" fill="#00AB39"/><rect width="30" height="10" fill="#fff"/><path d="M5 15C6 11 8 10 10.5 10L11.5 6.5L14 8.5L17 7.5L16 10C19.5 10 22.5 11 25 13.5C23 13.5 21.5 14.5 20.5 16C18.5 14.5 16 14.5 14 15.5L12 17.5L11 14.5L8 16.5Z" fill="#D30731"/>',
+ '🏴󠁧󠁢󠁳󠁣󠁴󠁿':'<rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.2"/>',
+ '🇮🇪':'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#169B62"/><rect x="20" width="10" height="20" fill="#FF883E"/>',
+ '🇩🇪':'<rect width="30" height="20" fill="#FFCE00"/><rect width="30" height="6.7" fill="#000"/><rect y="6.7" width="30" height="6.7" fill="#DD0000"/>',
+ '🇮🇹':'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#009246"/><rect x="20" width="10" height="20" fill="#CE2B37"/>',
+ '🇳🇴':'<rect width="30" height="20" fill="#BA0C2F"/><rect x="8" width="6" height="20" fill="#fff"/><rect y="7" width="30" height="6" fill="#fff"/><rect x="9.5" width="3" height="20" fill="#00205B"/><rect y="8.5" width="30" height="3" fill="#00205B"/>',
+ '🇫🇮':'<rect width="30" height="20" fill="#fff"/><rect x="8" width="4.6" height="20" fill="#003580"/><rect y="7.7" width="30" height="4.6" fill="#003580"/>',
+ '🇯🇵':'<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#BC002D"/>',
+ '🇳🇿':'<rect width="30" height="20" fill="#012169"/><path d="M0 0L15 10M15 0L0 10" stroke="#fff" stroke-width="2.2"/><path d="M0 0L15 10M15 0L0 10" stroke="#C8102E" stroke-width="1"/><path d="M7.5 0V10M0 5H15" stroke="#fff" stroke-width="3.4"/><path d="M7.5 0V10M0 5H15" stroke="#C8102E" stroke-width="2"/><g fill="#CC142B" stroke="#fff" stroke-width=".4"><circle cx="22" cy="4.5" r="1.2"/><circle cx="26" cy="9" r="1.2"/><circle cx="22" cy="15" r="1.2"/><circle cx="18.5" cy="9.5" r="1.2"/></g>',
+ '🇮🇳':'<rect width="30" height="20" fill="#fff"/><rect width="30" height="6.7" fill="#FF9933"/><rect y="13.3" width="30" height="6.7" fill="#138808"/><circle cx="15" cy="10" r="2.6" fill="none" stroke="#000080" stroke-width=".6"/><circle cx="15" cy="10" r=".6" fill="#000080"/>'
 };
 var FLAGIMG={};
 function flagSvgStr(e,extra){var b=FLAGSVG[e];if(!b)return '';return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20" '+(extra||'')+'>'+b+'</svg>';}
@@ -1263,7 +1291,21 @@ var XD={
 'Canada':{t:[['🍁','Sugar maple','Its sap makes maple syrup.'],['🌲','Black spruce','A tall, thin tree that grows in cold places.'],['🌲','Balsam fir','A tree that smells lovely. It is a Christmas tree.']],a:[['🦌','Moose','The biggest kind of deer.'],['🐻','Black bear','It loves berries and fish.'],['🦫','Beaver','It builds dams from sticks and mud.']]},
 'Sweden':{t:[['🌲','Norway spruce','A tall tree with soft, dark green needles.'],['🌲','Scots pine','It has orange bark and long needles.'],['🌳','Silver birch','A tree with white bark.']],a:[['🦌','Elk','A very big deer with wide antlers.'],['🐈','Lynx','A wild cat with tufty ears.'],['🦉','Great grey owl','A big owl that hunts in the snow.']]},
 'United States':{t:[['🌲','Coast redwood','The tallest tree on Earth, over 100 metres tall.'],['🌲','Douglas fir','A very tall tree with soft needles.'],['🌲','Western red cedar','A tree with sweet-smelling wood.']],a:[['🐻','Black bear','It loves berries and fish.'],['🦉','Spotted owl','An owl that hides in old forests.'],['🐌','Banana slug','A bright yellow slug as long as a banana.']]},
-'Chile':{t:[['🌲','Monkey puzzle tree','Its spiky branches look like a puzzle for a monkey.'],['🌲','Alerce','A giant tree that can live for thousands of years.'],['🌳','Southern beech','A tree that grows in cool, wet forests.']],a:[['🦌','Pudu','The smallest deer in the world.'],['🐦','Magellanic woodpecker','A big woodpecker with a red head.'],['🐸','Darwin\'s frog','The dad keeps the tadpoles safe in his mouth.']]}
+'Chile':{t:[['🌲','Monkey puzzle tree','Its spiky branches look like a puzzle for a monkey.'],['🌲','Alerce','A giant tree that can live for thousands of years.'],['🌳','Southern beech','A tree that grows in cool, wet forests.']],a:[['🦌','Pudu','The smallest deer in the world.'],['🐦','Magellanic woodpecker','A big woodpecker with a red head.'],['🐸','Darwin\'s frog','The dad keeps the tadpoles safe in his mouth.']]},
+'Portugal':{t:[['🌳','Cork oak','Its thick bark is peeled to make corks. It grows back!'],['🌲','Maritime pine','A tall pine that grows near the coast.'],['🌳','Strawberry tree','Its red fruit looks a bit like strawberries.']],a:[['🐈','Iberian lynx','A rare wild cat with tufty ears.'],['🐺','Iberian wolf','A wolf that lives and hunts in a pack.'],['🐦','Hoopoe','A pretty bird with a crest like a crown.']]},
+'Spain':{t:[['🌳','Holm oak','An oak that stays green all year.'],['🌲','Spanish fir','A rare fir that only grows in the south of Spain.'],['🌳','Olive tree','Its fruit makes olives and oil. Some live for hundreds of years.']],a:[['🐈','Iberian lynx','One of the rarest wild cats in the world.'],['🐻','Brown bear','It lives in the northern mountains.'],['🦅','Spanish imperial eagle','A big bird of prey with white shoulders.']]},
+'France':{t:[['🌳','Oak','A strong tree that drops acorns.'],['🌳','European beech','It has smooth, grey bark and shiny leaves.'],['🌲','Maritime pine','It grows in the huge pine forest of the Landes.']],a:[['🐿️','Red squirrel','It has a bushy tail and tufty ears.'],['🐗','Wild boar','It digs in the soil to find food.'],['🦊','Red fox','A clever hunter with a bushy tail.']]},
+'England':{t:[['🌳','English oak','It can live for over 1000 years. Acorns grow on it.'],['🌳','Silver birch','A slim tree with white bark.'],['🌲','Yew','Some yew trees are over 2000 years old.']],a:[['🐿️','Red squirrel','It has a bushy tail and tufty ears.'],['🦡','Badger','It lives underground and comes out at night.'],['🦔','Hedgehog','It curls into a spiky ball to stay safe.']]},
+'Wales':{t:[['🌳','Sessile oak','The main oak of Welsh woods. It likes wet hills.'],['🌳','Rowan','It has red berries that birds love.'],['🌳','Hazel','Its nuts are a favourite food of small animals.']],a:[['🦅','Red kite','A big bird with a forked tail. Wales helped save it.'],['🐾','Pine marten','A shy animal that climbs trees very well.'],['🐭','Hazel dormouse','A tiny mouse that sleeps all winter.']]},
+'Scotland':{t:[['🌲','Scots pine','A tall pine with orange bark. It is a Scottish tree.'],['🌳','Rowan','It has red berries that birds love.'],['🌳','Silver birch','A slim tree with white bark.']],a:[['🦌','Red deer','The biggest land animal in Scotland.'],['🦅','Golden eagle','A huge bird that soars over the mountains.'],['🐈','Wildcat','A rare, shy cat with a stripy, thick tail.']]},
+'Ireland':{t:[['🌳','Oak','A strong tree that drops acorns.'],['🌳','Hawthorn','It has white flowers in spring and red berries.'],['🌳','Ash','Hurling sticks are made from its wood.']],a:[['🦌','Red deer','The males have big antlers.'],['🐾','Pine marten','A shy animal that climbs trees very well.'],['🐇','Irish hare','A fast hare that only lives in Ireland.']]},
+'Germany':{t:[['🌲','Norway spruce','The tree you often see as a Christmas tree.'],['🌳','European beech','It has smooth, grey bark and shiny leaves.'],['🌲','Silver fir','A tall tree with silvery lines under its needles.']],a:[['🦌','Roe deer','A small, shy deer that comes out at dusk.'],['🦊','Red fox','A clever hunter with a bushy tail.'],['🐈','Eurasian lynx','A wild cat with tufty ears.']]},
+'Italy':{t:[['🌲','Stone pine','It looks like an umbrella. Its seeds are pine nuts.'],['🌳','Sweet chestnut','Its nuts are roasted and eaten.'],['🌲','Cypress','A tall, thin tree often seen in Tuscany.']],a:[['🐺','Italian wolf','It lives in the Apennine mountains.'],['🐻','Marsican brown bear','A very rare brown bear.'],['🦎','Fire salamander','It is black with bright yellow spots.']]},
+'Norway':{t:[['🌲','Norway spruce','A tall tree with dark green needles.'],['🌲','Scots pine','A pine with orange bark and long needles.'],['🌳','Mountain birch','A small birch that grows high on the hills.']],a:[['🦌','Elk','A very big deer with wide antlers.'],['🐈','Lynx','A wild cat with tufty ears.'],['🐾','Wolverine','A small but very strong hunter.']]},
+'Finland':{t:[['🌲','Scots pine','A pine with orange bark and long needles.'],['🌲','Norway spruce','A tall tree with dark green needles.'],['🌳','Downy birch','A birch with white bark that grows in cold places.']],a:[['🐻','Brown bear','Finland\'s national animal.'],['🐿️','Flying squirrel','It glides from tree to tree.'],['🦌','Reindeer','It grows new antlers every year.']]},
+'Japan':{t:[['🌲','Japanese cedar','A very tall, straight tree. Some are over 1000 years old.'],['🌸','Cherry tree','It has pink blossom in spring.'],['🍁','Japanese maple','Its leaves turn bright red in autumn.']],a:[['🐒','Japanese macaque','Snow monkeys sit in warm hot springs.'],['🦌','Sika deer','A spotted deer that lives in the forest.'],['🦎','Giant salamander','One of the biggest salamanders in the world.']]},
+'New Zealand':{t:[['🌲','Kauri','A giant tree that can live for 2000 years.'],['🌳','Pōhutukawa','It has red flowers at Christmas time.'],['🌿','Silver fern','Its leaves are silver underneath. It is a symbol of New Zealand.']],a:[['🐦','Kiwi','A bird that cannot fly. It comes out at night.'],['🦜','Kākāpō','A big green parrot that cannot fly.'],['🦎','Tuatara','A reptile that can live for over 100 years.']]},
+'India':{t:[['🌳','Banyan tree','Its roots hang down from the branches. It is the national tree of India.'],['🌳','Teak','It has strong wood that is used for furniture.'],['🥭','Mango tree','It grows mangoes, India\'s national fruit.']],a:[['🐅','Bengal tiger','The national animal of India.'],['🐘','Indian elephant','A big elephant with smaller ears.'],['🦚','Indian peacock','The males have beautiful long tail feathers.']]}
 };
 (function(){for(var k in XD)TOTAL+=XD[k].t.length+XD[k].a.length;})();
 var xs={tab:'t',sel:-1};
@@ -2350,8 +2392,8 @@ step('Shaping the continents...',function(){makeTile();buildTerrain();})
   buildSprites();
   zones=SITES.map(function(d,i){
     var p=findLand(lon2x(d[2]),lat2y(d[3]));
-    var z={name:d[0],flag:d[1],x:p[0],y:p[1],w:d[4],kind:d[5],fact:d[6],r:160+d[4]*70,ph:i*1.7,hp:1,threat:null,lost:false,flash:0,cool:0,pt:0};
-    z.zr=Math.max(110,Math.min(150,z.r*0.4));mkTrees(z,i);return z;
+    var z={name:d[0],flag:d[1],x:p[0],y:p[1],w:d[4],kind:d[5],fact:d[6],r:d[7]||160+d[4]*70,ph:i*1.7,hp:1,threat:null,lost:false,flash:0,cool:0,pt:0};
+    z.zr=d[7]?Math.round(d[7]*0.5):Math.max(110,Math.min(150,z.r*0.4));mkTrees(z,i);return z;
   });
   updateCount();
   buildDecor(zones);
